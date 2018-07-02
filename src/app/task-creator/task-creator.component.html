@@ -1,46 +1,62 @@
-<div class="note-creator shadow-2" [ngStyle]="{'background-color': newTask.color}">
-    <form class="row" (ngSubmit)="onCreateTask()">
+<div class="container task-creator shadow-2" [ngStyle]="{'background-color': newTask.color}">
+    <form (ngSubmit)="onCreateTask()">
+
+<div class="form-group"
+      *ngIf="fullForm"  >
+<label for="newTaskName" class="row" > Task Name:  </label>
+
       <input
+      id="newTaskName"
         type="text"
-        (focus)="toggle(true)"
         [(ngModel)]="newTask.name"
         name="newTaskName"
-        placeholder="Name"
-        class="col-xs-10 title"
+        placeholder="Enter task name"
+        class="title col-9"
         *ngIf="fullForm"
+        required
       >
+    </div>
+    <div class="form-group" >
       <input
         type="text"
         (focus)="toggle(true)"
         [(ngModel)]="newTask.description"
         name="newTaskDescription"
         placeholder="Start typing task description..."
-        class="col-xs-10"
+        class="col-12"
+        required
       >
-
+</div>
+<div class="form-group"
+      *ngIf="fullForm"
+> 
+<label for="newTaskEstimate" class="row"  > Estimate:  </label>
       <input
-      type="text"
-      (focus)="toggle(true)"
+      class="col-3"
+
+      id="newTaskEstimate"
+      type="number"
       [(ngModel)]="newTask.estimate"
       name="newTaskEstimate"
-      placeholder="Estimate"
-      class="col-xs-10"
-      *ngIf="fullForm"
+    > Hours.
+</div>
+<div class="form-group" >
 
-    >
-      <div class="actions col-xs-12 row between-xs" *ngIf="fullForm">
-        <div class="col-xs-3">
+      <div class="actions col-xs-3" *ngIf="fullForm">
+        <div>
           <app-color-picker
             (selected)="onColorSelect($event)"
             [colors]="colors"
           >
           </app-color-picker>
         </div>
-        <button
+  </div>
+        <button 
+         *ngIf="fullForm"
           type="submit"
-          class="btn-light"
+          class="btn btn-primary"
          >
-          Done
+          Add task
         </button>
       </div>
     </form>

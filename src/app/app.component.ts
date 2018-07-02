@@ -19,14 +19,14 @@ export class AppComponent {
   }
   
   createTask(task: Task) {
-    console.log("createdtask", task)
-
-    this.taskDataService.addTask(task, 1)
+    this.taskDataService.addTask(task)
     this.states = this.taskDataService.getAllStates();
   }
 
-  removeTask(task) {
-    this.taskDataService.deleteTaskById(task.id, task.stateId);
+  removeTask(task: Task) {
+    this.taskDataService.deleteTaskById(task.id);
+    this.states = this.taskDataService.getAllStates();
+
   }
 
   getTasks(stateId: number) {
@@ -34,13 +34,14 @@ export class AppComponent {
   }
 
 
-  dragOperation: boolean = false;
+  dragOperation: boolean = true;
 
   states: Array<State> = this.taskDataService.getAllStates();
 
   addTo(task: Task, state: number) {
+    console.log(task, state);
     task.stateId = state;
-    this.taskDataService.updateTaskById(task.id, task)
+    this.taskDataService.updateTaskById(task.id, state)
     this.states = this.taskDataService.getAllStates();
   }
 

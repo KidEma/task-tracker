@@ -1,39 +1,51 @@
 <h4>TaskTracker</h4>
+<div class="container">
 
-<app-task-creator
-(createTask)="createTask($event)"
-></app-task-creator>
+    <app-task-creator (createTask)="createTask($event)"></app-task-creator>
 
-  <div class="row">
-      <div class="col-12">
-          <div dnd-sortable-container [sortableData]="states" [dropZones]="['container-dropZone']">
-              <div class="col-sm3"
-                      *ngFor="let state of states; let i = index"
-                      dnd-sortable [sortableIndex]="i" [dragEnabled]="dragOperation">
-                  <div class="panel panel-warning"
-                      dnd-sortable-container 
+    <div>
+        <div class="row col-12" dnd-sortable-container [sortableData]="states" [dropZones]="['container-dropZone']">
+            <div class="col-4"
+                    *ngFor="let state of states; let i = index"
+                    dnd-sortable [sortableIndex]="i" [dragEnabled]="false">
+                <div class="panel panel-warning"
+                    dnd-sortable-container 
 
-                      [sortableData]="state.tasks" 
-                      [dropZones]="['widget-dropZone']">
-                      <div class="panel-heading">
-                          {{state.id}} - {{state.name}}
-                      </div>
-                      <div class="panel-body">
-                          <ul class="list-group">
-                              <li *ngFor="let task of state.tasks; let x = index" class="list-group-item"
-                                  dnd-sortable [sortableIndex]="x" [dragEnabled]="!dragOperation"
-                                  dnd-droppable (onDropSuccess)="addTo($event, state.id)"
-                                  [dragData]="task"> 
-                                  <div [ngStyle]="{'background-color': task.color}">
-                                    #{{task.id}} - {{task.name}} 
+                    [sortableData]="state.tasks" 
+                    [dropZones]="['widget-dropZone']">
+                    <div class="panel-heading">
+                        {{state.id}} - {{state.name}}
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            <li *ngFor="let task of state.tasks; let x = index" 
+                                dnd-droppable
+                                class="list-group-item"
+                                dnd-sortable 
+                                [sortableIndex]="x" 
+                                [dragEnabled]="true"
+                                (onDropSuccess)="addTo($event, state.id)"
+                                [dragData]="task"> 
+                                <div class="task-card" [ngStyle]="{'background-color': task.color}">
+                                    <b>#{{task.id}} - {{task.name}} </b>
+                                    <br/>
+                                    {{task.description}}
                                     <br/>
                                     Estimate: {{task.estimate}}
+                                    <div>
+                                        <i (click)="removeTask(task)" 
+                                        class="material-icons icon">delete</i>
+                                    </div>
                                 </div>
-                                </li>
-                          </ul>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   Planned: {{states | taskState: 1}}
+   In Progress: {{states | taskState: 2}}
+   Completed: {{states | taskState: 3}}
+</div>
