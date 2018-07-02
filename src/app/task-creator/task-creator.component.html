@@ -1,0 +1,47 @@
+<div class="note-creator shadow-2" [ngStyle]="{'background-color': newTask.color}">
+    <form class="row" (ngSubmit)="onCreateTask()">
+      <input
+        type="text"
+        (focus)="toggle(true)"
+        [(ngModel)]="newTask.name"
+        name="newTaskName"
+        placeholder="Name"
+        class="col-xs-10 title"
+        *ngIf="fullForm"
+      >
+      <input
+        type="text"
+        (focus)="toggle(true)"
+        [(ngModel)]="newTask.description"
+        name="newTaskDescription"
+        placeholder="Start typing task description..."
+        class="col-xs-10"
+      >
+
+      <input
+      type="text"
+      (focus)="toggle(true)"
+      [(ngModel)]="newTask.estimate"
+      name="newTaskEstimate"
+      placeholder="Estimate"
+      class="col-xs-10"
+      *ngIf="fullForm"
+
+    >
+      <div class="actions col-xs-12 row between-xs" *ngIf="fullForm">
+        <div class="col-xs-3">
+          <app-color-picker
+            (selected)="onColorSelect($event)"
+            [colors]="colors"
+          >
+          </app-color-picker>
+        </div>
+        <button
+          type="submit"
+          class="btn-light"
+         >
+          Done
+        </button>
+      </div>
+    </form>
+  </div>
