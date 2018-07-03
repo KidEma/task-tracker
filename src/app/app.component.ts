@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import {Consts} from './consts'
+import {Consts} from './consts';
 import { Task } from './task';
 import { State } from './state';
 import { TaskDataService } from './task-data.service';
@@ -17,9 +17,11 @@ export class AppComponent {
 
   constructor(private taskDataService: TaskDataService) {
   }
-  
+
+  states: Array<State> = this.taskDataService.getAllStates();
+
   createTask(task: Task) {
-    this.taskDataService.addTask(task)
+    this.taskDataService.addTask(task);
     this.states = this.taskDataService.getAllStates();
   }
 
@@ -33,15 +35,9 @@ export class AppComponent {
     return this.taskDataService.getTasksByStateId(stateId);
   }
 
-
-  dragOperation: boolean = true;
-
-  states: Array<State> = this.taskDataService.getAllStates();
-
-  addTo(task: Task, state: number) {
-    console.log(task, state);
+  addTo(task: any, state: number) {
     task.stateId = state;
-    this.taskDataService.updateTaskById(task.id, state)
+    this.taskDataService.updateTaskById(task.dragData.id, state);
     this.states = this.taskDataService.getAllStates();
   }
 

@@ -4,29 +4,23 @@
     <app-task-creator (createTask)="createTask($event)"></app-task-creator>
 
     <div>
-        <div class="row col-12" dnd-sortable-container [sortableData]="states" [dropZones]="['container-dropZone']">
+        <div class="row col-12">
             <div class="col-4"
-                    *ngFor="let state of states; let i = index"
-                    dnd-sortable [sortableIndex]="i" [dragEnabled]="false">
+                    *ngFor="let state of states; let i = index">
                 <div class="panel panel-warning"
-                    dnd-sortable-container 
-
-                    [sortableData]="state.tasks" 
-                    [dropZones]="['widget-dropZone']">
-                    <div class="panel-heading">
+                    dnd-droppable                    
+                    (onDropSuccess)="addTo($event, state.id)" >
+                    <div class="panel-heading" >
                         {{state.id}} - {{state.name}}
                     </div>
-                    <div class="panel-body">
-                        <ul class="list-group">
-                            <li *ngFor="let task of state.tasks; let x = index" 
-                                dnd-droppable
-                                class="list-group-item"
-                                dnd-sortable 
-                                [sortableIndex]="x" 
+                <div class="panel-body">
+                        <div
+                            *ngFor="let task of state.tasks; let x = index" 
+                              class="list-group-item"
+                                dnd-draggable
                                 [dragEnabled]="true"
-                                (onDropSuccess)="addTo($event, state.id)"
                                 [dragData]="task"> 
-                                <div class="task-card" [ngStyle]="{'background-color': task.color}">
+                                <div [ngStyle]="{'background-color': task.color}">
                                     <b>#{{task.id}} - {{task.name}} </b>
                                     <br/>
                                     {{task.description}}
@@ -37,8 +31,6 @@
                                         class="material-icons icon">delete</i>
                                     </div>
                                 </div>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </div>

@@ -8,7 +8,7 @@ import { TaskDataService } from './task-data.service';
 import 'node_modules/ng2-dnd/bundles/style.css';
 import { TaskCreatorComponent } from './task-creator/task-creator.component';
 import { ColorPickerComponent } from './color-picker/color-picker.component';
-import { TaskStatePipe } from './task-state.pipe'
+import { TaskStatePipe } from './task-state.pipe';
 
 
 @NgModule({
